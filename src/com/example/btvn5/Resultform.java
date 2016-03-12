@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Resultform extends Activity {
+public class resultform extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
