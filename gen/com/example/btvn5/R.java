@@ -32,11 +32,12 @@ public final class R {
         public static final int TextView01=0x7f080001;
         public static final int TextView02=0x7f080005;
         public static final int UsernameEText=0x7f080002;
-        public static final int action_settings=0x7f080015;
+        public static final int action_settings=0x7f080016;
+        public static final int btnExit=0x7f080014;
         public static final int btnReset=0x7f080010;
         public static final int btnSelect=0x7f080009;
         public static final int btnSignup=0x7f080011;
-        public static final int checkBox1=0x7f080014;
+        public static final int checkBox1=0x7f080015;
         public static final int gridHobbies=0x7f08000f;
         public static final int radio0=0x7f08000c;
         public static final int radio1=0x7f08000d;

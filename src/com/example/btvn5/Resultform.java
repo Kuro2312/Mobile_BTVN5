@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,8 +41,20 @@ public class resultform extends Activity {
 	    textBirthday.setText("Birthday: " + birthday);
 	    textGender.setText("Gender: " + gender);
 	    textHobbies.setText("Hobbies: " + hobbies);
+	    
+	    Button btn = (Button) findViewById(R.id.btnExit);
+	    btn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				//finish();
+				//System.exit(0);
+				resultform.this.finishAffinity();
+			}
+		});
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
