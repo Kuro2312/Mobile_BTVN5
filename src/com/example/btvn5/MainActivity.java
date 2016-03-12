@@ -1,5 +1,11 @@
 package com.example.btvn5;
 
+import java.util.ArrayList;
+
+import com.example.btvn5.HobbyAdapter;
+import com.example.btvn5.HobbyAdapter.ViewHolder;
+import com.example.btvn5.R;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -20,28 +27,25 @@ public class MainActivity extends Activity {
 	EditText etxRetype;
 	EditText etxDate;
 	RadioGroup radioGroup;
-	CheckBox cbxTennis;
-	CheckBox cbxFulbal;
-	CheckBox cbxOthers;
 	
-	
+	String[] _items = {"Tennis", "Fulbal", "Others"}; 
+	HobbyAdapter _adapter;
+	GridView _grid;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_registerform);
 		
 		etxUser = (EditText) findViewById(R.id.UsernameEText);
 		etxPass = (EditText) findViewById(R.id.PassEText);
 		etxRetype = (EditText) findViewById(R.id.RetypeEText);
 		etxDate = (EditText) findViewById(R.id.DateEText);
-		radioGroup = (RadioGroup) findViewById(R.id.radioGroup1);
-		cbxTennis = (CheckBox) findViewById(R.id.checkBox1);
-		cbxFulbal = (CheckBox) findViewById(R.id.checkBox2);
-		cbxOthers = (CheckBox) findViewById(R.id.checkBox3);
-		
-		//int id = radioGroup.getCheckedRadioButtonId();
-		
+		radioGroup = (RadioGroup) findViewById(R.id.radioGroup1);	
+		_grid = (GridView) findViewById(R.id.gridHobbies);
+		_adapter = new HobbyAdapter(this, _items);
+		_grid.setAdapter(_adapter);
+			
 		Button btnReset = (Button) findViewById(R.id.btnReset);
 		btnReset.setOnClickListener(new View.OnClickListener() {
 			
@@ -75,6 +79,44 @@ public class MainActivity extends Activity {
 		
 	}
 
+	public View getViewByPosition(int pos, GridView listView) 
+	{
+	    final int firstListItemPosition = listView.getFirstVisiblePosition();
+	    final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+	    if (pos < firstListItemPosition || pos > lastListItemPosition ) 
+	    {
+	        return listView.getAdapter().getView(pos, null, listView);
+	    } else 
+	    {
+	        final int childIndex = pos - firstListItemPosition;
+	        return listView.getChildAt(childIndex);
+	    }
+	}
+	
+	public String GetHobbies()
+	{
+		String hobbies = "";
+		
+		int count = _adapter.getCount();
+		
+		for (int i = 0; i < count; i++)
+		{		
+			View view = getViewByPosition(i, _grid);
+			
+			ViewHolder holder = (ViewHolder) view.getTag();
+			
+			if (holder.box.isChecked())
+			{
+				if (hobbies.equals("") == false)
+					hobbies += ", ";
+				hobbies += holder.name.getText().toString();
+			}
+		}
+		
+		return hobbies;
+	}
+	
 	public String GetGender()
 	{
 		int count = radioGroup.getChildCount();
@@ -94,8 +136,9 @@ public class MainActivity extends Activity {
 	
 	public void SignUp()
 	{			 	        
-		String gender = GetGender();
-		
+		String gender = GetGender();		
+		String hobbies = GetHobbies();
+ 	
 		String pass = etxPass.getText().toString();
 		if (pass.equals(etxRetype.getText().toString()) == false)
 		{
@@ -114,7 +157,7 @@ public class MainActivity extends Activity {
 		myIntent.putExtra("Password", etxPass.getText().toString());
 		myIntent.putExtra("Birthday", etxDate.getText().toString());
 		myIntent.putExtra("Gender", gender);
-		myIntent.putExtra("Hobbies", etxPass.getText().toString());
+		myIntent.putExtra("Hobbies", hobbies);
 		startActivity(myIntent);
 	}
 	
